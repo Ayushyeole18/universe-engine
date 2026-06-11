@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THE UNIVERSE ENGINE</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+  <!-- Main canvas — Three.js renders here -->
+  <canvas id="universe-canvas"></canvas>
+
+  <!-- Spacetime fabric canvas — 2D overlay -->
+  <canvas id="fabric-canvas"></canvas>
+
+  <!-- HUD: top bar -->
+  <div id="hud">
+    <div id="hud-title">THE UNIVERSE ENGINE</div>
+    <div id="hud-stats">
+      <span id="fps-counter">60 FPS</span>
+      <span id="particle-count">0 PARTICLES</span>
+      <span id="mode-display">NORMAL SPACE</span>
+    </div>
+  </div>
+
+  <!-- Key guide -->
+  <div id="key-guide">
+    <div class="key-row"><kbd>T</kbd> Time Dilation</div>
+    <div class="key-row"><kbd>H</kbd> Hyper Speed</div>
+    <div class="key-row"><kbd>Q</kbd> Quantum Mode</div>
+    <div class="key-row"><kbd>G</kbd> Glitch Field</div>
+    <div class="key-row"><kbd>M</kbd> Multiverse</div>
+    <div class="key-row"><kbd>C</kbd> Cosmic Storm</div>
+    <div class="key-row"><kbd>N</kbd> Galactic Map</div>
+<div class="key-row"><kbd>R</kbd> Reality Fracture</div>
+  </div>
+
+  <!-- Mode announcement overlay -->
+  <div id="mode-announce"></div>
+
+  <!-- AI Core terminal -->
+  <div id="ai-terminal">
+    <div id="ai-header">◈ UNIVERSE CORE</div>
+    <div id="ai-log"></div>
+  </div>
+
+  <!-- Universe Collapse button -->
+  <div id="collapse-btn-wrap">
+    <button id="collapse-btn">⬛ COLLAPSE THE UNIVERSE</button>
+  </div>
+
+  <!-- Collapse overlay -->
+  <div id="collapse-overlay">
+    <div id="collapse-phase-text"></div>
+  </div>
+
+  <!-- Post-collapse screen -->
+  <div id="terminated-screen">
+    <div id="terminated-text">UNIVERSE TERMINATED</div>
+    <button id="recreate-btn">◈ RECREATE UNIVERSE</button>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --cyan: #00f5ff;
+  --purple: #9b59ff;
+  --pink: #ff2d9b;
+  --gold: #ffd700;
+  --bg: #000005;
+  --glass: rgba(0, 240, 255, 0.05);
+  --border: rgba(0, 240, 255, 0.2);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Courier New', monospace;
+  color: var(--cyan);
+}
+
+/* ── Canvases ── */
+#universe-canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+#fabric-canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── HUD ── */
+#hud {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 10;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 24px;
+  background: linear-gradient(to bottom, rgba(0,5,20,0.85), transparent);
+  border-bottom: 1px solid var(--border);
+}
+#hud-title {
+  font-size: 18px; font-weight: 700;
+  letter-spacing: 6px;
+  color: var(--cyan);
+  text-shadow: 0 0 20px var(--cyan);
+}
+#hud-stats {
+  display: flex; gap: 24px;
+  font-size: 11px; letter-spacing: 2px;
+  color: rgba(0, 245, 255, 0.6);
+}
+
+/* ── Key Guide ── */
+#key-guide {
+  position: fixed; bottom: 24px; left: 24px;
+  z-index: 10;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.key-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; letter-spacing: 1px;
+  color: rgba(0, 245, 255, 0.5);
+}
+kbd {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 11px; font-family: inherit;
+  color: var(--cyan);
+}
+
+/* ── Mode Announce ── */
+#mode-announce {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  font-size: 28px; font-weight: 700;
+  letter-spacing: 8px;
+  color: var(--cyan);
+  text-shadow: 0 0 40px var(--cyan), 0 0 80px var(--cyan);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  text-align: center;
+}
+
+/* ── AI Terminal ── */
+#ai-terminal {
+  position: fixed; bottom: 24px; right: 24px;
+  z-index: 10;
+  width: 280px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+#ai-header {
+  padding: 8px 12px;
+  background: rgba(0, 245, 255, 0.1);
+  border-bottom: 1px solid var(--border);
+  font-size: 11px; letter-spacing: 3px;
+}
+#ai-log {
+  padding: 10px 12px;
+  font-size: 11px; line-height: 1.6;
+  color: rgba(0, 245, 255, 0.7);
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+/* ── Collapse Button ── */
+#collapse-btn-wrap {
+  position: fixed; bottom: 24px;
+  left: 50%; transform: translateX(-50%);
+  z-index: 10;
+}
+#collapse-btn {
+  padding: 12px 32px;
+  background: transparent;
+  border: 1px solid rgba(255, 45, 155, 0.6);
+  border-radius: 4px;
+  color: var(--pink);
+  font-family: inherit;
+  font-size: 13px; letter-spacing: 4px;
+  cursor: pointer;
+  text-shadow: 0 0 20px var(--pink);
+  transition: all 0.3s;
+}
+#collapse-btn:hover {
+  background: rgba(255, 45, 155, 0.1);
+  box-shadow: 0 0 30px rgba(255, 45, 155, 0.4);
+}
+
+/* ── Collapse Overlay ── */
+#collapse-overlay {
+  position: fixed; inset: 0;
+  z-index: 30;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+}
+#collapse-overlay.active { pointer-events: all; }
+#collapse-phase-text {
+  font-size: 22px; letter-spacing: 6px;
+  color: #fff;
+  text-shadow: 0 0 60px #fff;
+  text-align: center;
+}
+
+/* ── Terminated Screen ── */
+#terminated-screen {
+  position: fixed; inset: 0;
+  z-index: 50;
+  background: #000;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s;
+}
+#terminated-screen.visible {
+  opacity: 1; pointer-events: all;
+}
+#terminated-text {
+  font-size: 36px; letter-spacing: 12px;
+  color: #fff;
+  text-shadow: 0 0 60px #fff;
+}
+#recreate-btn {
+  padding: 14px 40px;
+  background: transparent;
+  border: 1px solid rgba(0, 245, 255, 0.5);
+  border-radius: 4px;
+  color: var(--cyan);
+  font-family: inherit;
+  font-size: 14px; letter-spacing: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+#recreate-btn:hover {
+  background: rgba(0, 245, 255, 0.1);
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
+}
+
+/* ── Glitch Effect ── */
+body.glitch-active #universe-canvas {
+  animation: glitch-shift 0.1s infinite;
+}
+@keyframes glitch-shift {
+  0%   { filter: hue-rotate(0deg)   saturate(1); transform: translate(0,0); }
+  25%  { filter: hue-rotate(90deg)  saturate(3); transform: translate(-2px,1px); }
+  50%  { filter: hue-rotate(180deg) saturate(2); transform: translate(2px,-1px); }
+  75%  { filter: hue-rotate(270deg) saturate(4); transform: translate(-1px,2px); }
+  100% { filter: hue-rotate(360deg) saturate(1); transform: translate(0,0); }
+}
+
+/* ── Time Dilation ── */
+body.time-dilation * { animation-duration: 5s !important; }
+
+/* ── Hyper Speed ── */
+body.hyper-speed #universe-canvas {
+  filter: blur(1px) brightness(1.5);
+}
+
+/* ── Quantum ── */
+body.quantum-mode #hud,
+body.quantum-mode #ai-terminal {
+  animation: quantum-phase 0.5s infinite;
+}
+@keyframes quantum-phase {
+  0%, 100% { opacity: 1; transform: none; }
+  50% { opacity: 0.6; transform: translateX(2px); }
+}
